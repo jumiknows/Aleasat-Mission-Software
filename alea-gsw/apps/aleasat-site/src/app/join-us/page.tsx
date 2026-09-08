@@ -614,7 +614,7 @@ export default function JoinUs() {
               >
                 {/* Information Package Button */}
                 <Button
-                  href="https://drive.google.com/drive/folders/1pEJUl17ljSqzesc4_z0VMYhGs72do1gh"
+                  href="https://drive.google.com/drive/folders/1n6QCLkcxDga5NRTx_VBeEZObuoaJOnIY?usp=sharing"
                   target="_blank"
                   rel="noopener noreferrer"
                   variant="outlined"
@@ -638,7 +638,7 @@ export default function JoinUs() {
 
                 {/* Application Form Button */}
                 <Button
-                  href="https://docs.google.com/forms/d/e/1FAIpQLSfoQyGgXicweZblIHKxVE_yweX87NsYEywUnK00jgPt9I46cw/viewform?usp=header"
+                  href="https://forms.gle/gdPHkznW1ixc7J5EA"
                   target="_blank"
                   rel="noopener noreferrer"
                   variant="contained"
