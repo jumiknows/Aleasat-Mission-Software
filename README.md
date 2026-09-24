@@ -18,6 +18,7 @@ The active team develops primarily in GitLab. This GitHub repository provides a 
 - [Contributor guide](alea-gsw/CONTRIBUTING.md)
 - [Outreach website onboarding](alea-gsw/docs/OUTREACH_ONBOARDING.md)
 - [Outreach website page guide](alea-gsw/apps/aleasat-site/README.md)
+- [Outreach website mockups and wireframes](https://www.figma.com/design/fZ2igaJDJR0llYSKZPzqn8/ALEASAT-Website?node-id=120-3&p=f&t=AzR2QPzzVf9hrviY-0)
 - [Media and artifact workflow](alea-gsw/docs/ASSET_WORKFLOW.md)
 - [Private team wiki](https://wiki.aleasat.space/), available to approved team members
 
@@ -33,4 +34,3 @@ ALEASAT is a team project with contributions from students across several engine
 Ernest Wong contributed to mission operations and the outreach website through SFU SAT. That work is now being handed to active team maintainers so the project can continue beyond any one student.
 
 For access, deployment, or operational questions, contact the current ALEASAT Mission Operations lead through the team Discord. Do not place credentials or internal mission details in public issues.
-
