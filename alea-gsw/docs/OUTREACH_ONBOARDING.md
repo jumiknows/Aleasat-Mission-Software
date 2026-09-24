@@ -4,9 +4,7 @@ Welcome to the ALEASAT outreach website. This guide gets a new contributor from 
 
 ## What you will work on
 
-The outreach frontend now lives at `alea-gsw/apps/aleasat-site` from the repository root. When you are already inside `alea-gsw`, the path is `apps/aleasat-site`.
-
-It uses:
+The public website lives in `apps/aleasat-site`. It uses:
 
 - Next.js 15
 - React 19
@@ -24,7 +22,7 @@ The website also uses images, video, models, and other large files served from `
 Before setup, confirm that you can access:
 
 - The `alea-2020` GitLab group
-- The current ALEASAT software repository
+- The Barbours Cut repository
 - The artifact repository if your task involves media
 - The MOPS frontend Discord channel
 - The private wiki if your role requires it
@@ -41,34 +39,27 @@ corepack enable
 
 The repository already includes Yarn 4.0.1. You do not need to install Yarn globally.
 
-## 3. Open the ground software workspace
+## 3. Clone the repository
 
-The frontend is no longer onboarded from the old Barbours Cut path.
-
-After cloning the current ALEASAT repository, move into:
+HTTPS:
 
 ```bash
-cd alea-gsw
+git clone https://gitlab.com/alea-2020/mission-operations/barbours-cut.git
+cd barbours-cut
 ```
 
-The outreach website is here:
-
-```text
-alea-gsw/apps/aleasat-site
-```
-
-If you are using this public GitHub snapshot:
+SSH:
 
 ```bash
-git clone https://github.com/jumiknows/AleasatV2.git
-cd AleasatV2/alea-gsw
+git clone git@gitlab.com:alea-2020/mission-operations/barbours-cut.git
+cd barbours-cut
 ```
 
-Team members should use the current canonical repository location provided by the Mission Operations lead.
+The old `aleasat-software` clone address is no longer the correct address for this workspace.
 
 ## 4. Install dependencies
 
-From the `alea-gsw` workspace root:
+From the repository root:
 
 ```bash
 yarn install
@@ -89,7 +80,7 @@ If the site does not start, check these items first:
 
 1. `node --version` reports version 22 or newer.
 2. `yarn --version` reports 4.0.1.
-3. `yarn install` completed inside `alea-gsw`.
+3. `yarn install` completed at the repository root.
 4. Another process is not already using port 3000.
 5. Your branch contains the newest default branch changes.
 
@@ -105,6 +96,8 @@ If the site does not start, check these items first:
 | `packages/ui/src` | Components and layouts shared across applications |
 
 Read the [page guide](../apps/aleasat-site/README.md) before changing navigation or content.
+
+The [ALEASAT Website Figma file](https://www.figma.com/design/fZ2igaJDJR0llYSKZPzqn8/ALEASAT-Website?node-id=120-3&p=f&t=AzR2QPzzVf9hrviY-0) contains mockups and wireframes from multiple project phases. Link the exact frame you are implementing and ask the current maintainer to confirm that it is still the intended design.
 
 ## 7. Create your branch
 
@@ -174,4 +167,3 @@ Share these details in the MOPS frontend channel:
 - What you already tried
 
 You are not expected to know the whole monorepo before contributing. Ask early, leave notes for the next person, and keep the work moving as a team.
-
