@@ -4,7 +4,9 @@ Welcome to the ALEASAT outreach website. This guide gets a new contributor from 
 
 ## What you will work on
 
-The public website lives in `apps/aleasat-site`. It uses:
+The outreach frontend now lives at `alea-gsw/apps/aleasat-site` from the repository root. When you are already inside `alea-gsw`, the path is `apps/aleasat-site`.
+
+It uses:
 
 - Next.js 15
 - React 19
@@ -22,7 +24,7 @@ The website also uses images, video, models, and other large files served from `
 Before setup, confirm that you can access:
 
 - The `alea-2020` GitLab group
-- The Barbours Cut repository
+- The current ALEASAT software repository
 - The artifact repository if your task involves media
 - The MOPS frontend Discord channel
 - The private wiki if your role requires it
@@ -39,27 +41,34 @@ corepack enable
 
 The repository already includes Yarn 4.0.1. You do not need to install Yarn globally.
 
-## 3. Clone the repository
+## 3. Open the ground software workspace
 
-HTTPS:
+The frontend is no longer onboarded from the old Barbours Cut path.
 
-```bash
-git clone https://gitlab.com/alea-2020/mission-operations/barbours-cut.git
-cd barbours-cut
-```
-
-SSH:
+After cloning the current ALEASAT repository, move into:
 
 ```bash
-git clone git@gitlab.com:alea-2020/mission-operations/barbours-cut.git
-cd barbours-cut
+cd alea-gsw
 ```
 
-The old `aleasat-software` clone address is no longer the correct address for this workspace.
+The outreach website is here:
+
+```text
+alea-gsw/apps/aleasat-site
+```
+
+If you are using this public GitHub snapshot:
+
+```bash
+git clone https://github.com/jumiknows/AleasatV2.git
+cd AleasatV2/alea-gsw
+```
+
+Team members should use the current canonical repository location provided by the Mission Operations lead.
 
 ## 4. Install dependencies
 
-From the repository root:
+From the `alea-gsw` workspace root:
 
 ```bash
 yarn install
@@ -80,7 +89,7 @@ If the site does not start, check these items first:
 
 1. `node --version` reports version 22 or newer.
 2. `yarn --version` reports 4.0.1.
-3. `yarn install` completed at the repository root.
+3. `yarn install` completed inside `alea-gsw`.
 4. Another process is not already using port 3000.
 5. Your branch contains the newest default branch changes.
 
