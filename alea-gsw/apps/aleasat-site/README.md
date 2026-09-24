@@ -30,6 +30,20 @@ Node.js 22 or newer is required. The repository provides Yarn 4.0.1.
 
 The shared navbar and footer are assembled in `src/app/layout.tsx` with components from `packages/ui`.
 
+## Design source
+
+The [ALEASAT Website Figma file](https://www.figma.com/design/fZ2igaJDJR0llYSKZPzqn8/ALEASAT-Website?node-id=120-3&p=f&t=AzR2QPzzVf9hrviY-0) contains outreach, dashboard, mission control, and mobile concepts created across several project phases.
+
+Use it as design context, not as an automatic description of the current application. Before implementing a frame:
+
+1. Link the exact Figma node in the issue or merge request.
+2. Compare the frame with the current route, shared components, and data model.
+3. Confirm with the current maintainer whether the frame is current, exploratory, or historical.
+4. Reuse Material UI and `packages/ui` components before adding one-off styles.
+5. Include desktop and mobile screenshots with the merge request.
+
+The Figma canvas includes concepts outside the public outreach site. A dashboard or mission control frame should not be added to `aleasat-site` simply because it appears in the same file.
+
 ## Where to make common changes
 
 | Change | Start here |
