@@ -115,8 +115,8 @@ The root build intentionally excludes some web applications. Run the workspace s
 
 - [Contributor guide](CONTRIBUTING.md)
 - [Outreach onboarding](docs/OUTREACH_ONBOARDING.md)
+- [Figma mockups and wireframes](https://www.figma.com/design/fZ2igaJDJR0llYSKZPzqn8/ALEASAT-Website?node-id=120-3&p=f&t=AzR2QPzzVf9hrviY-0)
 - [Artifact workflow](docs/ASSET_WORKFLOW.md)
 - [Outreach page guide](apps/aleasat-site/README.md)
 
 Internal operational details remain in the private team wiki. Public documentation should never contain credentials, private endpoints, personal contact information, or sensitive mission data.
-
