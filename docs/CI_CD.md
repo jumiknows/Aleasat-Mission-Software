@@ -41,10 +41,12 @@ The GitHub pipeline checks:
 
 1. Shared type generation
 2. TypeScript type checks
-3. Biome lint and formatting
+3. Biome checks for changed outreach TypeScript files
 4. A production Next.js build
-5. Cypress end-to-end tests in Chrome
+5. A Cypress smoke suite for the public routes
 6. The outreach Docker image build
+
+The public snapshot contains older Cypress and formatting debt inherited from the private repository history. Those older checks are not silently treated as passing. They are tracked separately while new changes are held to the current rules.
 
 The checks use Node.js 22 to match the current workspace requirement.
 
@@ -79,9 +81,9 @@ This keeps the public mirror useful for contributors while leaving operational a
 For normal changes to `main`, require these checks before merging:
 
 - Pull Request Policy
-- Outreach CI / Types and lint
+- Outreach CI / Types and changed-file lint
 - Outreach CI / Production build
-- Outreach CI / Cypress E2E
+- Outreach CI / Cypress smoke
 - Outreach CI / Docker build
 - Vercel
 
