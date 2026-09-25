@@ -1,0 +1,43 @@
+name: Pull Request Policy
+
+on:
+  pull_request:
+    types:
+      - opened
+      - edited
+      - synchronize
+      - reopened
+
+permissions:
+  contents: read
+
+jobs:
+  ticket-reference:
+    name: Ticket reference
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Validate ALEA pull request metadata
+        shell: bash
+        run: |
+          title=$(jq -r '.pull_request.title // ""' "$GITHUB_EVENT_PATH")
+          body=$(jq -r '.pull_request.body // ""' "$GITHUB_EVENT_PATH")
+
+          echo "Pull request title: $title"
+
+          if [[ "$title" =~ ^(Draft: )?ALEA-[0-9]+[[:space:]] ]]; then
+            if ! grep -Eq 'PP#[0-9]+' <<< "$body"; then
+              echo "::error::ALEA pull requests must include Parent issue: PP#XXXX in the description."
+              exit 1
+            fi
+
+            if ! [[ "$title" =~ ^(Draft: )?ALEA-[0-9]+[[:space:]](build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\([^)]*\))?:[[:space:]].+ ]]; then
+              echo "::error::Use a title such as ALEA-2952 test: add join page coverage."
+              exit 1
+            fi
+
+            echo "ALEA and OpenProject references look valid."
+          else
+            echo "GitHub-only maintenance PR. OpenProject references are optional."
+          fi
