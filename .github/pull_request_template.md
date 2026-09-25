@@ -2,21 +2,49 @@ OpenProject ticket: ALEA-XXXX
 Parent issue: PP#XXXX
 GitHub issue: #XXXX
 
-## Overview
+> Remove fields and sections that do not apply. Keep the evidence needed to review the change.
 
-Describe the problem and the change in plain language.
+## Problem
 
-If this work came from OpenProject, keep the ALEA and PP references above.
+What requirement, defect, limitation, or maintenance need does this address?
 
-If this is public GitHub maintenance with no OpenProject ticket, write N/A for the OpenProject fields and link the GitHub issue instead.
+Describe the current behavior before describing the solution.
 
-## Testing
+## Approach
 
-Describe exactly how you tested the change.
+What changed, and why was this approach chosen?
 
-Include the commands you ran and any manual checks that matter.
+Include design decisions, important parameters, constraints, or meaningful alternatives only when they affect review or future maintenance.
 
-For visible website changes, include desktop and mobile screenshots when useful.
+## Verification
+
+Describe the evidence used to verify the change.
+
+### Automated
+
+List the relevant commands, tests, or CI checks and the result.
+
+### Manual, integration, or hardware
+
+Describe the setup, expected result, observed result, and hardware or environment when relevant.
+
+### Measured results
+
+Include timing, memory, accuracy, resource, or performance measurements when the change makes a measurable claim.
+
+Omit this subsection if there is no meaningful measurement.
+
+## Risks and limitations
+
+What could still fail, behave differently, or require follow-up?
+
+Include compatibility, resource, timing, migration, security, or untested-path concerns when relevant.
+
+## References
+
+Link only material that supports the requirement, design decision, algorithm, or verification evidence.
+
+Examples: OpenProject requirement, API documentation, datasheet, standard, paper, canonical implementation, design note, or prior merge request.
 
 ## Reviewers
 
@@ -24,8 +52,13 @@ Tag the current maintainer or reviewer.
 
 ## Checklist
 
-- [ ] I linked the OpenProject ticket or GitHub issue.
-- [ ] I reviewed the diff before opening this pull request.
-- [ ] I ran the relevant checks.
-- [ ] I did not include credentials, private endpoints, or internal-only mission information.
-- [ ] I documented follow-up work or known limitations.
+- [ ] The change is linked to its issue or requirement.
+- [ ] The rationale explains non-obvious engineering decisions.
+- [ ] Verification evidence supports the behavior being claimed.
+- [ ] Measurements include units and enough context to interpret them.
+- [ ] Known limitations or untested paths are stated.
+- [ ] References are relevant and preferably primary sources.
+- [ ] No credentials, private endpoints, or internal-only mission information are included.
+- [ ] Long-form evidence is stored in a design or verification note when the PR would otherwise become difficult to review.
+
+See [Engineering Review Standard](../docs/ENGINEERING_REVIEW_STANDARD.md).
