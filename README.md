@@ -39,6 +39,7 @@ Node.js 22 or newer is required. See the outreach onboarding guide below for the
 
 - [Ground software overview](alea-gsw/README.md)
 - [Contributor guide](alea-gsw/CONTRIBUTING.md)
+- [CI and CD](docs/CI_CD.md)
 - [Repository history and work tracking](docs/REPOSITORY_HISTORY.md)
 - [Outreach website onboarding](alea-gsw/docs/OUTREACH_ONBOARDING.md)
 - [Outreach website page guide](alea-gsw/apps/aleasat-site/README.md)
