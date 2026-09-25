@@ -16,6 +16,8 @@ The public GitHub history already contains original GitLab commit objects such a
 
 These same SHAs exist in the private GitLab repository.
 
+The September 24, 2026 audit identified `8aacdd59` as the latest shared commit on the GitLab `dev` history. The next GitLab commit, `645a69b7`, has `8aacdd59` as its parent and is not present in GitHub. This gives the two repositories a clear historical split point.
+
 ## History audit
 
 A repository audit on September 24, 2026 found that the current GitLab `dev` branch has continued well beyond the public GitHub snapshot.
