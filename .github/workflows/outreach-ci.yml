@@ -1,0 +1,188 @@
+name: Outreach CI
+
+on:
+  pull_request:
+    paths:
+      - "alea-gsw/apps/aleasat-site/**"
+      - "alea-gsw/packages/ui/**"
+      - "alea-gsw/packages/utils/**"
+      - "alea-gsw/package.json"
+      - "alea-gsw/yarn.lock"
+      - "alea-gsw/.yarnrc.yml"
+      - "alea-gsw/turbo.json"
+      - ".github/workflows/outreach-ci.yml"
+  push:
+    branches:
+      - main
+    paths:
+      - "alea-gsw/apps/aleasat-site/**"
+      - "alea-gsw/packages/ui/**"
+      - "alea-gsw/packages/utils/**"
+      - "alea-gsw/package.json"
+      - "alea-gsw/yarn.lock"
+      - "alea-gsw/.yarnrc.yml"
+      - "alea-gsw/turbo.json"
+      - ".github/workflows/outreach-ci.yml"
+  workflow_dispatch:
+
+concurrency:
+  group: outreach-ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  CI: "true"
+  AUTH_SECRET: testsecret
+  NEXTAUTH_SECRET: testsecret
+  AUTH_TRUST_HOST: "true"
+  AUTH_URL: http://localhost:3000
+
+defaults:
+  run:
+    working-directory: alea-gsw
+
+jobs:
+  quality:
+    name: Types and lint
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Enable Corepack
+        run: |
+          corepack enable
+          node --version
+          yarn --version
+
+      - name: Install dependencies
+        run: yarn install --immutable --mode=skip-build
+
+      - name: Rebuild CI tools
+        run: yarn rebuild tsc turbo @biomejs/biome
+
+      - name: Build shared types
+        run: yarn build:types --cache-dir=".turbo" --continue
+
+      - name: Type check workspaces
+        run: yarn test:types --cache-dir=".turbo" --continue
+
+      - name: Check formatting and lint
+        run: yarn lint:ci --cache-dir=".turbo" --continue
+
+  build:
+    name: Production build
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Build shared types
+        run: yarn build:types --cache-dir=".turbo"
+
+      - name: Build outreach website
+        run: yarn workspace @aleasat/aleasat-site build
+
+  e2e:
+    name: Cypress E2E
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Build shared types
+        run: yarn build:types --cache-dir=".turbo"
+
+      - name: Build outreach website
+        run: yarn workspace @aleasat/aleasat-site build
+
+      - name: Start outreach website
+        run: |
+          yarn workspace @aleasat/aleasat-site start > /tmp/aleasat-site.log 2>&1 &
+          echo $! > /tmp/aleasat-site.pid
+
+          for attempt in $(seq 1 30); do
+            if curl --silent --fail http://localhost:3000 > /dev/null; then
+              echo "Website is ready"
+              exit 0
+            fi
+
+            if ! kill -0 "$(cat /tmp/aleasat-site.pid)" 2>/dev/null; then
+              echo "Website process exited before becoming ready"
+              cat /tmp/aleasat-site.log
+              exit 1
+            fi
+
+            sleep 2
+          done
+
+          echo "Website did not become ready in time"
+          cat /tmp/aleasat-site.log
+          exit 1
+
+      - name: Run Cypress
+        run: |
+          cd apps/aleasat-site
+          yarn cypress run --browser chrome --config watchForFileChanges=false
+
+      - name: Show server log on failure
+        if: failure()
+        run: cat /tmp/aleasat-site.log || true
+
+      - name: Upload Cypress artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: outreach-cypress
+          if-no-files-found: ignore
+          path: |
+            alea-gsw/apps/aleasat-site/cypress/screenshots
+            alea-gsw/apps/aleasat-site/cypress/videos
+
+  container:
+    name: Docker build
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Build outreach container
+        run: |
+          docker build             --file apps/aleasat-site/Dockerfile             --tag aleasat-site:ci             .
