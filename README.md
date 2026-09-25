@@ -12,6 +12,29 @@ The active team develops primarily in GitLab. This GitHub repository provides a 
 | `alea-gsw` | Ground software monorepo, including the public website, dashboard, services, and shared packages |
 | `tools` | Supporting development and mission tooling |
 
+## Outreach website quick start
+
+The outreach website is nested inside the ground software workspace:
+
+```text
+alea-gsw/apps/aleasat-site
+```
+
+Clone this GitHub snapshot and enter the workspace:
+
+```bash
+git clone https://github.com/jumiknows/Aleasat-Mission-Software.git
+cd Aleasat-Mission-Software/alea-gsw
+corepack enable
+yarn install
+yarn build:types
+yarn workspace @aleasat/aleasat-site dev
+```
+
+Then open `http://localhost:3000`.
+
+Node.js 22 or newer is required. See the outreach onboarding guide below for the full setup and contribution workflow.
+
 ## Start here
 
 - [Ground software overview](alea-gsw/README.md)
