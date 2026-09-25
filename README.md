@@ -2,7 +2,7 @@
 
 This repository is a public snapshot of software built by the ALEASAT collaboration between UBC Orbit and SFU SAT. It includes flight software, ground software, mission operations tools, and the public outreach website.
 
-The active team develops primarily in GitLab. This GitHub repository provides a readable public entry point and preserves the work for future contributors.
+The active team develops primarily in GitLab. This GitHub repository provides a readable public entry point and preserves approved work for future contributors.
 
 ## Repository guide
 
@@ -39,11 +39,20 @@ Node.js 22 or newer is required. See the outreach onboarding guide below for the
 
 - [Ground software overview](alea-gsw/README.md)
 - [Contributor guide](alea-gsw/CONTRIBUTING.md)
+- [Repository history and work tracking](docs/REPOSITORY_HISTORY.md)
 - [Outreach website onboarding](alea-gsw/docs/OUTREACH_ONBOARDING.md)
 - [Outreach website page guide](alea-gsw/apps/aleasat-site/README.md)
 - [Outreach website mockups and wireframes](https://www.figma.com/design/fZ2igaJDJR0llYSKZPzqn8/ALEASAT-Website?node-id=120-3&p=f&t=AzR2QPzzVf9hrviY-0)
 - [Media and artifact workflow](alea-gsw/docs/ASSET_WORKFLOW.md)
 - [Private team wiki](https://wiki.aleasat.space/), available to approved team members
+
+## GitLab and OpenProject history
+
+The public GitHub repository contains part of the original GitLab commit history with the original commit SHAs and ticket references.
+
+The private GitLab repository has continued beyond this public snapshot. Do not manually replay old commits or copy private history into this public repository.
+
+Read [Repository History and Work Tracking](docs/REPOSITORY_HISTORY.md) before migrating historical work.
 
 ## Public systems
 

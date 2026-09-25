@@ -12,17 +12,41 @@ Internal contributors should also join the appropriate ALEASAT GitLab group and 
 
 For ground software work, run Yarn commands from the `alea-gsw` workspace. The outreach website itself is in `alea-gsw/apps/aleasat-site`.
 
+## Ticket references
+
+ALEASAT historically connects engineering work to OpenProject.
+
+If your task has an OpenProject work package, keep its existing references:
+
+```text
+ALEA-2952
+Parent issue: PP#2952
+```
+
+Use the ALEA reference in the pull request or merge request title when practical.
+
+If the work exists only in this public GitHub repository, link the GitHub issue instead. Do not invent an OpenProject number.
+
+See [Repository History and Work Tracking](../docs/REPOSITORY_HISTORY.md) before moving old GitLab work into GitHub.
+
 ## Branches
 
-Create a focused branch from the current default branch:
+For OpenProject work, prefer a branch that keeps the ticket visible:
 
 ```bash
 git switch main
 git pull
-git switch -c feat/firstname-short-description
+git switch -c ALEA-2952-short-description
 ```
 
-Other common prefixes are `fix`, `docs`, `test`, and `chore`.
+For public GitHub-only maintenance, focused prefixes are also fine:
+
+```text
+fix/short-description
+docs/short-description
+test/short-description
+chore/short-description
+```
 
 ## Commits
 
@@ -32,10 +56,23 @@ Review your changes before staging them:
 git status
 git diff
 git add path/to/changed-file
+```
+
+For OpenProject work, keep the ticket in the commit subject when it adds useful traceability:
+
+```bash
+git commit -m "ALEA-2952 test: add join page Cypress coverage"
+```
+
+For public GitHub-only work, use a clear conventional commit:
+
+```bash
 git commit -m "docs(site): improve contributor onboarding"
 ```
 
-Commit messages follow [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/). Prefer a small number of meaningful commits over many vague updates.
+Prefer a small number of meaningful commits over vague updates.
+
+Do not rewrite old GitLab commits just to change their messages or ticket format.
 
 ## Checks
 
@@ -53,6 +90,8 @@ Run the relevant unit or Cypress tests when your change affects behaviour.
 Internal contributors should open a GitLab merge request in the canonical repository.
 
 Contributors working only from this public GitHub snapshot should open a GitHub pull request.
+
+The GitHub pull request template keeps the original ALEA and PP ticket fields while also supporting GitHub-only maintenance.
 
 Include:
 
