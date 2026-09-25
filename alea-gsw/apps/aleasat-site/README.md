@@ -2,19 +2,39 @@
 
 This Next.js application powers the public ALEASAT website. It introduces the mission, spacecraft, team, sponsors, and ways to join the project.
 
+## Location in the repository
+
+From the full mission software repository root, this application lives at:
+
+```text
+alea-gsw/apps/aleasat-site
+```
+
+The Yarn workspace root is:
+
+```text
+alea-gsw
+```
+
+Run install, development, lint, type, and test commands from `alea-gsw`. Do not run a separate `yarn install` inside this application directory.
+
 ## Run the site
 
-From the ground software root:
+From the full repository root:
 
 ```bash
+cd alea-gsw
 corepack enable
 yarn install
+yarn build:types
 yarn workspace @aleasat/aleasat-site dev
 ```
 
 Open `http://localhost:3000`.
 
-Node.js 22 or newer is required. The repository provides Yarn 4.0.1.
+Node.js 22 or newer is required. The workspace provides Yarn 4.0.1.
+
+If you have not cloned the repository yet, start with the [outreach onboarding guide](../../docs/OUTREACH_ONBOARDING.md).
 
 ## Page guide
 
@@ -59,6 +79,8 @@ The Figma canvas includes concepts outside the public outreach site. A dashboard
 | Shared navbar or footer | `packages/ui/src/layout` |
 | Browser tests | `cypress/e2e` |
 
+Paths in this section are relative to `alea-gsw/apps/aleasat-site` unless they begin with `packages/`. Shared package paths are relative to `alea-gsw`.
+
 ## Media files
 
 Small files that belong only to this application can live in `public`. Large or shared files are served from `https://artifact.aleasat.space` and maintained in the [artifact repository](https://gitlab.com/alea-2020/mission-operations/artifact).
@@ -66,6 +88,8 @@ Small files that belong only to this application can live in `public`. Large or 
 Read the [media and artifact workflow](../../docs/ASSET_WORKFLOW.md) before adding, renaming, or removing production media.
 
 ## Checks
+
+Run these from `alea-gsw`:
 
 ```bash
 yarn workspace @aleasat/aleasat-site test:types
