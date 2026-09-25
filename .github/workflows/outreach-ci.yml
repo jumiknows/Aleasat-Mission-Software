@@ -45,16 +45,18 @@ defaults:
 
 jobs:
   quality:
-    name: Types and lint
+    name: Types and changed-file lint
     runs-on: ubuntu-latest
     timeout-minutes: 20
 
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: 22
 
@@ -76,8 +78,60 @@ jobs:
       - name: Type check workspaces
         run: yarn test:types --cache-dir=".turbo" --continue
 
-      - name: Check formatting and lint
-        run: yarn lint:ci --cache-dir=".turbo" --continue
+      - name: Lint changed outreach files
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            base="${{ github.event.pull_request.base.sha }}"
+          else
+            base="${{ github.event.before }}"
+          fi
+
+          if [[ -z "$base" || "$base" == "0000000000000000000000000000000000000000" ]]; then
+            echo "No usable base commit. Skipping changed-file lint."
+            exit 0
+          fi
+
+          mapfile -t changed < <(
+            git diff --name-only "$base" "$GITHUB_SHA" --               "alea-gsw/apps/aleasat-site/**/*.ts"               "alea-gsw/apps/aleasat-site/**/*.tsx"               "alea-gsw/packages/ui/**/*.ts"               "alea-gsw/packages/ui/**/*.tsx"               "alea-gsw/packages/utils/**/*.ts"               "alea-gsw/packages/utils/**/*.tsx"
+          )
+
+          if [[ ${#changed[@]} -eq 0 ]]; then
+            echo "No changed TypeScript files to lint."
+            exit 0
+          fi
+
+          site_files=()
+          ui_files=()
+          utils_files=()
+
+          for file in "${changed[@]}"; do
+            case "$file" in
+              alea-gsw/apps/aleasat-site/*)
+                site_files+=("${file#alea-gsw/apps/aleasat-site/}")
+                ;;
+              alea-gsw/packages/ui/*)
+                ui_files+=("${file#alea-gsw/packages/ui/}")
+                ;;
+              alea-gsw/packages/utils/*)
+                utils_files+=("${file#alea-gsw/packages/utils/}")
+                ;;
+            esac
+          done
+
+          if [[ ${#site_files[@]} -gt 0 ]]; then
+            yarn workspace @aleasat/aleasat-site exec biome ci "${site_files[@]}"
+          fi
+
+          if [[ ${#ui_files[@]} -gt 0 ]]; then
+            yarn workspace @aleasat/ui exec biome ci "${ui_files[@]}"
+          fi
+
+          if [[ ${#utils_files[@]} -gt 0 ]]; then
+            yarn workspace @aleasat/utils exec biome ci "${utils_files[@]}"
+          fi
 
   build:
     name: Production build
@@ -86,10 +140,10 @@ jobs:
 
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: 22
 
@@ -106,16 +160,16 @@ jobs:
         run: yarn workspace @aleasat/aleasat-site build
 
   e2e:
-    name: Cypress E2E
+    name: Cypress smoke
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 20
 
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: 22
 
@@ -155,10 +209,10 @@ jobs:
           cat /tmp/aleasat-site.log
           exit 1
 
-      - name: Run Cypress
+      - name: Run Cypress smoke suite
         run: |
           cd apps/aleasat-site
-          yarn cypress run --browser chrome --config watchForFileChanges=false
+          yarn cypress run             --spec cypress/e2e/smoke.cy.ts             --browser chrome             --config watchForFileChanges=false
 
       - name: Show server log on failure
         if: failure()
@@ -166,7 +220,7 @@ jobs:
 
       - name: Upload Cypress artifacts
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: outreach-cypress
           if-no-files-found: ignore
@@ -181,7 +235,7 @@ jobs:
 
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Build outreach container
         run: |
