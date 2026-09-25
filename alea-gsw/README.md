@@ -1,37 +1,58 @@
 # ALEASAT Ground Software
 
-The ground software repository brings the ALEASAT public website, mission dashboard, backend services, and shared TypeScript packages into one Yarn workspace.
+The ground software workspace brings the ALEASAT public website, mission dashboard, backend services, and shared TypeScript packages into one Yarn workspace.
 
-The repository is named Barbours Cut after the Port of Houston terminal. In practical terms, it is the central workspace for software that supports the mission from the ground.
+The package name is `barbours-cut`, but the workspace itself is nested under `alea-gsw` in the full mission software repository.
+
+## Where to run commands
+
+From the full repository root:
+
+```text
+alea-gsw/
+  apps/
+    aleasat-site/
+  packages/
+  package.json
+  yarn.lock
+  turbo.json
+```
+
+Run Yarn commands from `alea-gsw`.
+
+The outreach website source is in `alea-gsw/apps/aleasat-site`.
 
 ## Requirements
 
 - Git
 - Node.js 22 or newer
 - Corepack
-- Yarn 4.0.1, provided by the repository
-- Access to the ALEASAT GitLab group
+- Yarn 4.0.1, provided by the workspace
 - Several gigabytes of free storage for dependencies and generated files
+
+Internal contributors also need access to the ALEASAT GitLab group.
 
 VS Code is common on the team, but any editor with TypeScript and Biome support will work.
 
-## Clone the canonical repository
+## Clone the repository
 
-HTTPS:
+### Public GitHub snapshot
+
+```bash
+git clone https://github.com/jumiknows/Aleasat-Mission-Software.git
+cd Aleasat-Mission-Software/alea-gsw
+```
+
+### Internal ALEASAT repository
 
 ```bash
 git clone https://gitlab.com/alea-2020/mission-operations/barbours-cut.git
-cd barbours-cut
+cd barbours-cut/alea-gsw
 ```
 
-SSH:
+SSH is also supported by both hosts.
 
-```bash
-git clone git@gitlab.com:alea-2020/mission-operations/barbours-cut.git
-cd barbours-cut
-```
-
-If you are using the public GitHub snapshot instead, enter `alea-gsw` before running the remaining commands.
+Before continuing, confirm that `package.json`, `yarn.lock`, `apps`, and `packages` are in your current directory.
 
 ## Install the workspace
 
@@ -41,7 +62,7 @@ yarn install
 yarn build:types
 ```
 
-Run `yarn install` from the workspace root. You do not need to install dependencies again inside each application.
+Run `yarn install` from `alea-gsw`. You do not need to install dependencies again inside each application.
 
 ## Application map
 
@@ -78,20 +99,22 @@ Reusable packages live in `packages`. The outreach website relies most directly 
 
 ## Work on the outreach website
 
+From `alea-gsw`:
+
 ```bash
 yarn workspace @aleasat/aleasat-site dev
 ```
 
 Open `http://localhost:3000`.
 
-Before creating a merge request, run:
+Before opening a review, run:
 
 ```bash
 yarn workspace @aleasat/aleasat-site test:types
 yarn workspace @aleasat/aleasat-site lint
 ```
 
-For browser tests, keep the development server running in one terminal and use this command in another:
+For browser tests, keep the development server running in one terminal and use this command in another terminal from `alea-gsw`:
 
 ```bash
 yarn workspace @aleasat/aleasat-site cy:open
